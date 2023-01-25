@@ -7,28 +7,29 @@ import org.openqa.selenium.WebElement;
 
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import java.time.Duration;
 
 
 public class LoginPage {
-
-	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"bioUsername"\"]")
+	private WebDriver driver;
+	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[3]/android.widget.EditText")
 	private WebElement user_name;
 
 
-	@FindBy(xpath="bioPassword")
+	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[5]/android.widget.EditText")
 	private WebElement user_password;
 
 
-	@FindBy(xpath ="Sign In")
+	@FindBy(xpath ="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[6]/android.widget.Button")
 	 private WebElement signIn;
 	
 	public LoginPage(WebDriver driver) {
-		
-	
+
+	this.driver =  driver;
+
 		PageFactory.initElements(driver, this);
 		
 	}
@@ -36,10 +37,45 @@ public class LoginPage {
 	public void loginDetails() {
 	//	user_name.sendKeys("jose");
 	//	user_name.clear();
+		//fullcopy
+		sendKeysCustom(user_name,"rpraauto1@gmail.com" );
+		sendKeysCustom(user_password,"Pwc@2023" );
+		//waitForVisible(user_name,60);
+		//user_name.sendKeys("rpraauto1@gmail.com");
+		//user_password.sendKeys("Pwc@2023");
+		/*preprod
 		user_name.sendKeys("pwcsalesforcetest@gmail.com");
-		user_password.sendKeys("Pwc@2022");
+		user_password.sendKeys("Pwc@2023");
+		*/
+
 		signIn.click();
 		
+	}
+
+	public void waitForVisible(WebElement ele, int time) {
+		Duration dur = Duration.ofSeconds(time);
+		WebDriverWait wait = new WebDriverWait(driver, dur);
+		wait.until(ExpectedConditions.visibilityOf(ele));
+
+	}
+
+	public void waitForClickable(WebElement ele, int time) {
+		Duration dur = Duration.ofSeconds(time);
+		WebDriverWait wait = new WebDriverWait(driver, dur);
+		wait.until(ExpectedConditions.elementToBeClickable(ele));
+
+	}
+
+	public void sendKeysCustom(WebElement ele, String text) {
+		waitForVisible(ele, 60);
+		ele.sendKeys(text);
+
+	}
+
+	public void clickCustom(WebElement ele) {
+		waitForClickable(ele, 60);
+		ele.click();
+
 	}
 
 }
