@@ -138,7 +138,7 @@ public class ManifestSign {
 	private WebElement signManifest;
 
 
-	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'] | //android.widget.CheckBox[@content-desc=\"undefined\"]")
+	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'] | //android.widget.CheckBox[@content-desc=\"Consent Toggle Disabled\"]")
 	private WebElement signConsentCheckBox;
 
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Confirm'])[2] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[1]/android.view.ViewGroup/android.widget.TextView")
@@ -226,7 +226,7 @@ public class ManifestSign {
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Awaiting Signatures\"]/android.widget.TextView")
 	private WebElement manifestStatusAwaitingSign;
 
-	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"MN-000381227 Card\"]")
+	@FindBy(xpath="//android.view.ViewGroup[contains(@content-desc,'MN-')]")
 	private WebElement manifestCard;
 
 	public ManifestSign(WebDriver driver2) {
@@ -265,13 +265,13 @@ public class ManifestSign {
 		 AppiumDriver dr = null;
 		Duration dur = Duration.ofSeconds(5);
 		WebDriverWait wait = new WebDriverWait(driver, dur );
-		clickCustom(manifestSearch);
+		/*clickCustom(manifestSearch);
 		clickCustom(manifestNewSearch);
 		clickCustom(manifestSearchStatus);
 		clickCustom(manifestStatusAwaitingSign);
 		clickCustom(manifestSearchApply);
-
-		//clickCustom(manifestCard);
+*/
+		clickCustom(manifestCard);
 
 		clickCustom(signManifest);
 		System.out.println("---Sign Invoked----");

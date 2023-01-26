@@ -79,16 +79,17 @@ getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	loginPage.loginDetails();
 	System.out.println("---Login successfull----");
 
-	ManifestSign manifestSign= new ManifestSign(driver);
+	//ManifestSign manifestSign= new ManifestSign(driver);
 
-	manifestSign.signManifest();
-/*
+	//manifestSign.signManifest();
 	ManifestPage manifestPage= new ManifestPage(driver);
 
 	manifestPage.createManifest();
 
+	/*ManifestSign manifestSign= new ManifestSign(driver);
+
+	manifestSign.signManifest();*/
 System.out.println("---Manifest created----");
-*/
 }
 
 	@Test

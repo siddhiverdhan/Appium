@@ -143,14 +143,14 @@ public class ManifestPage {
 	private WebElement vehicleProvince;
 
 
-	@FindBy(xpath="(//XCUIElementTypeTextField[@name='-- '])[2] | //android.view.ViewGroup[@content-desc=\"Ontario\"]")
+	@FindBy(xpath="(//XCUIElementTypeTextField[@name='-- '])[2] | //android.view.ViewGroup[@content-desc=\"Alberta\"]")
 	private WebElement vehicleProvincePopup;
 
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Sign Manifest'])[2] | //android.view.ViewGroup[@content-desc=\"Sign Manifest\"]/android.view.ViewGroup/android.widget.TextView")
 	private WebElement signManifest;
 	
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'`] | //android.widget.CheckBox[@content-desc=\"undefined\"]")
+	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'] | //android.widget.CheckBox[@content-desc=\"Consent Toggle Disabled\"]")
 	private WebElement signConsentCheckBox;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Confirm'])[2] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[1]/android.view.ViewGroup/android.widget.TextView")
@@ -168,10 +168,10 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Vertical scroll bar, 3 pages'] ")
 	private WebElement verticalScrollBar;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept'] | //android.view.ViewGroup[@text=\"Accept\"]/android.view.ViewGroup")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept'] | //android.view.ViewGroup[@text='Accept']/android.view.ViewGroup")
 	private WebElement acceptWasteButton;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse'] | //android.view.ViewGroup[@text=\"Refuse\"]/android.view.ViewGroup")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse'] | //android.view.ViewGroup[@text='Refuse']/android.view.ViewGroup")
 	private WebElement refuseWasteButton;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Does not meet acceptance criteria'])[2] | (//android.view.ViewGroup[@text=\"Does not meet acceptance criteria\"])[1]/android.widget.TextView")
@@ -195,32 +195,36 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[6] | //android.view.ViewGroup[@content-desc=\"kg\"]")
 	private WebElement unitPopup;
 
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Copy Quantity Shipped'] | //android.view.ViewGroup[@text=\"Copy Quantity Shipped\"] ")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Copy Quantity Shipped'] | //android.view.ViewGroup[@text='Copy Quantity Shipped'] ")
 	private WebElement copyQuantityShipped;
 	
 	@FindBy(xpath="//XCUIElementTypeTextField[@name='RNE__Input__text-input'] | //android.widget.EditText[@content-desc=\"Quantity Received\"]")
 	private WebElement quantityReceived;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[3]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[3] | //android.view.ViewGroup[@content-desc=\"Quantity Received Units\"]" )
 	private WebElement unitReceived;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[5]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[5] | //android.view.ViewGroup[@content-desc=\"undefined\"]")
 	private WebElement handlingCode;
-	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept Waste']")
+
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"01 - Storage\"] | //android.view.ViewGroup[@content-desc=\"01 - Storage\"]")
+	private WebElement handlingCodePopUp;
+
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept Waste'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.TextView")
 	private WebElement acceptWasteConfirm;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse Waste']")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse Waste'] | //android.widget.TextView[@text=\"Refuse Waste\"]")
 	private WebElement refuseWasteConfirm;
 	
 	@FindBy(xpath="//XCUIElementTypeOther[@name=' Add Another Waste']")
 	private WebElement addAnotherLineItem;
 	
-	@FindBy(xpath="//XCUIElementTypeButton[@name=\"Return\"]")
+	@FindBy(xpath="//XCUIElementTypeButton[@name=\"Return\"] ")
 	private WebElement returnButton;
 
 	//driver.find_element_by_xpath(“//tag [contains( text(), ‘word’)]”)
-	@FindBy(xpath="//android.view.ViewGroup[contains(content-desc() ,\"Card\")]")
+	@FindBy(xpath="//android.view.ViewGroup[contains(@content-desc,'MN-')]")
 	private WebElement manifestCard;
 
 
@@ -369,11 +373,11 @@ public class ManifestPage {
 				break;
 			}
 		}
-	*/driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+	*/
+		//Add Waste and Shipment Date Info
+
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		clickCustom(addWasteButton);
-		//JavascriptExecutor js = (JavascriptExecutor) driver;
-		//js.executeScript("arguments[0].scrollIntoView(true);", searchReceiverText);
-		//js.executeScript("arguments[0].click();", addWasteButton);
 
 		clickCustom(selectShipMonth);
 		clickCustom(selectMonth);
@@ -390,80 +394,88 @@ public class ManifestPage {
 		clickCustom(selectYear);
 		scrollCustom();
 		clickCustom(selectWaste);
-		//selectWasteField.click();
-		//driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(5));
-		//clickCustom(selectWasteField);
-		//returnButton.click();
 
+		//Select Waste
 		clickCustom(selectWasteField);
-		for(int i=0; i<2; i++) {
 
-			if(selectButton.getAttribute("Enabled")== "true"){
+		for(int i=0; i<10; i++) {
+
+			if(!isVisible(selectArrivalMonth,5)){
+				clickCustom(selectWasteField);
 				clickCustom(selectButton);
-				break;
-			}
-		}
-
-/*
-	for(int i=0; i<2; i++) {
-			clickCustom(selectButton);
-			if(isVisible(selectArrivalMonth,5)){
-
-				break;
 			}
 			else {
-				clickCustom(selectButton);
+				System.out.println("count is "+ i);
+				break;
 			}
 		}
+		System.out.println("---selectWasteField----");
 
- */
+
+
+		System.out.println("---selectButton----");
 		if(isVisible(selectArrivalMonth,5)){
 			scrollCustom();
 		}
+
 		//enter waste details
-		//shippingName.clear();
+
 		sendKeysCustom(shippingName,"Shipping name");
-		//shippingName.sendKeys("Shipping name");
-		
-		//shippingName.sendKeys(Keys.RETURN);
-		
-		//quantity.clear();
-
 		sendKeysCustom(quantity,"350");
-		//quantity.sendKeys(Keys.RETURN);
-		//unit.clear();
-
 		clickCustom(unit);
 		clickCustom(unitKg);
-		//sendKeysCustom(quantity,Keys.RETURN);
-		//unit.sendKeys(Keys.RETURN);//didn't work
-		//unitKg.click();
-		
-		//readyForShipment.click();
 		clickCustom(readyForShipment);
-		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-		//Back
-		//clickCustom(manifestCard);
+
+		//Generator Sign
+		clickCustom(manifestCard);
 		clickCustom(signManifest);
-		//clickCustom(signConsentCheckBox);
-		signConsentCheckBox.sendKeys(Keys.RETURN);
-		for(int i=0;i<2;i++) {
-			if(signConsentCheckBox.getAttribute("checked") == "true") {
+		clickCustom(signConsentCheckBox);
+		//System.out.println("---selectButton----"+signConsentCheckBox.getAttribute("Value"));
+		/*if(signConsentCheckBox.getAttribute("Value")== "True") {
+			clickCustom(signConfirmation);
+		}*/
+		clickCustom(signConfirmation);
+
+/*		for(int i=0;i<2;i++) {
+			if(signConfirmation.getAttribute("enabled") == "false") {
 				clickCustom(signConfirmation);
 				break;
 			} else {
-				waitForClickable(signConsentCheckBox,5);
+				waitForClickable(signConfirmation,5);
 				clickCustom(signConfirmation);
 				break;
 			}
-		}
+		}*/
 		clickCustom(closeConfirmation);
 
+		//Carrier Sign
+		clickCustom(vehicleTab);
+		sendKeysCustom(vehicleRegNumber,"Testing");
+		clickCustom(vehicleProvince);
+		//driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"Ontario\"))"));
+
+		clickCustom(vehicleProvincePopup);
 		clickCustom(signManifest);
-		//clickCustom(signConsentCheckBox);
-		if(signConsentCheckBox.getAttribute("Value")== "True") {
-			clickCustom(signConfirmation);
-		}
+		clickCustom(signConsentCheckBox);
+		clickCustom(signConfirmation);
+
+		clickCustom(closeConfirmation);
+
+		clickCustom(confirmDropOff);
+		clickCustom(completeDropOff); //check
+		clickCustom(closeConfirmation);
+
+		//Receiver Sign
+		clickCustom(wasteTab);
+		clickCustom(acceptWasteButton);
+		clickCustom(copyQuantityShipped);
+		clickCustom(handlingCode);
+		clickCustom(handlingCodePopUp);
+		clickCustom(acceptWasteButton);
+		clickCustom(signManifest);
+		clickCustom(signConsentCheckBox);
+		clickCustom(signConfirmation);
+
 		clickCustom(closeConfirmation);
 
 	}
