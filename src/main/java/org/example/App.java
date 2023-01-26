@@ -95,7 +95,7 @@ System.out.println("---Manifest created----");
 	@Test
 	public void tC2() {
 
-		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		//getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		//driver.resetApp();
 		//LoginPage loginPage = new LoginPage(driver);
@@ -113,7 +113,7 @@ System.out.println("---Manifest created----");
 	@Test
 	public void tC3() {
 
-		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		//getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		//driver.resetApp();
 		//LoginPage loginPage = new LoginPage(driver);

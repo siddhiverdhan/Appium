@@ -118,8 +118,10 @@ public class ManifestPage {
 	private WebElement searchWaste;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"111 A\"]")
-	private WebElement selectWasteField;
-	
+	private WebElement selectWaste111A;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"121 B\"]")
+	private WebElement selectWaste121B;
 	@FindBy(xpath="//XCUIElementTypeOther[@name=\"Select Waste\"] | //android.view.ViewGroup[@content-desc=\"Select Waste\"]")
 	private WebElement selectWaste;
 	
@@ -129,7 +131,7 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])[7] | //android.widget.EditText[@content-desc=\"Quantity Shipped\"]")
 	private WebElement quantity;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"-- \"])[7] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[3]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"-- \"])[7] | //android.view.ViewGroup[@content-desc=\"Quantity Shipped Units\"]")
 	private WebElement unit;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='kg'])[2] | //android.view.ViewGroup[@content-desc=\"kg\"]/android.widget.TextView")
@@ -318,16 +320,16 @@ public class ManifestPage {
 */		waitForClickable(newManifest,60);
 		clickCustom(newManifest);
 
-		//Generator
+		//Select Generator
 		clickCustom(searchGeneratorText);
 		
 		sendKeysCustom(searchGeneratorPopupText,"ATC1 Business" );
 		clickCustom(generatorSearchResult);
 		clickCustom(selectGeneratorButton);
-		//clickCustom(selectButton);
+
 
 		
-		//carrier
+		//Select Carrier
 		for(int i=0; i<2; i++) {
 			clickCustom(searchCarrierText);
 			if(isVisible(searchCarrierPopupText,2)){
@@ -338,33 +340,10 @@ public class ManifestPage {
 
 		clickCustom(carrierSearchResult);
 		clickCustom(selectButton);
-		//clickCustom(selectGeneratorButton);
-		//sendKeysCustom(searchText,"TestautomationCar");
-/*		clickCustom(searchCarrierButton);
-		clickCustom(selectButton);
-		
-		
-		//Receiver
-
-		TouchActions action = new TouchActions(driver);
-		action.scroll(element, 10, 100);
-		action.perform();
-
-		new Actions(driver)
-				.scrollToElement(searchReceiverText)
-				.perform();
-
-		waitForVisible(searchReceiverText,60);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView(true);", searchReceiverText);
-		js.executeScript("arguments[0].click();", searchReceiverText);
-*/		//waitForVisible(searchReceiverText,60);
-
 
 		scrollCustom();
-		//driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
 
-		//clickCustom(searchReceiverText);
+		//Select Receiver
 		for(int i=0; i<2; i++) {
 			clickCustom(searchReceiverText);
 			if(isVisible(searchReceiverPopupText,2)){
@@ -375,35 +354,19 @@ public class ManifestPage {
 
 
 
-		//sendKeysCustom(searchReceiverPopupText,"TestAutomationRec");
 		clickCustom(receiverSearchResult);
-		//clickCustom(searchReceiverButton);
 		clickCustom(selectButton);
-		
-		
-		//clickCustom(addWasteButton);
-		//waitForClickable(addWasteButton,10);
-		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		//waitForVisible(receivingSiteAddress,10);
 
+		//Navigate to Waste
+		
 		for(int i=0; i<2; i++) {
-			//clickCustom(addWasteButton);
+
 			if(isVisible(selectShipMonth,2)){
 				clickCustom(addWasteButton);
 				break;
 			}
 		}
 
-
-	/*	for(int i=0; i<2; i++) {
-
-			if(addWasteButton.getDomAttribute("enabled") == "1"){
-				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-				clickCustom(addWasteButton);
-				break;
-			}
-		}
-	*/
 		//Add Waste and Shipment Date Info
 
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
@@ -426,12 +389,12 @@ public class ManifestPage {
 		clickCustom(selectWaste);
 
 		//Select Waste
-		clickCustom(selectWasteField);
+		clickCustom(selectWaste111A);
 
 		for(int i=0; i<10; i++) {
 
 			if(!isVisible(selectArrivalMonth,5)){
-				clickCustom(selectWasteField);
+				clickCustom(selectWaste111A);
 				clickCustom(selectButton);
 			}
 			else {
@@ -460,41 +423,23 @@ public class ManifestPage {
 		clickCustom(manifestCard);
 		clickCustom(signManifest);
 		clickCustom(signConsentCheckBox);
-		//System.out.println("---selectButton----"+signConsentCheckBox.getAttribute("Value"));
-		/*if(signConsentCheckBox.getAttribute("Value")== "True") {
-			clickCustom(signConfirmation);
-		}*/
 		clickCustom(signConfirmation);
-
-/*		for(int i=0;i<2;i++) {
-			if(signConfirmation.getAttribute("enabled") == "false") {
-				clickCustom(signConfirmation);
-				break;
-			} else {
-				waitForClickable(signConfirmation,5);
-				clickCustom(signConfirmation);
-				break;
-			}
-		}*/
 		clickCustom(closeConfirmation);
 
 		//Carrier Sign
 		clickCustom(vehicleTab);
 		sendKeysCustom(vehicleRegNumber,"Testing");
 		clickCustom(vehicleProvince);
-		//driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"Ontario\"))"));
-
 		clickCustom(vehicleProvincePopupAB);
 		clickCustom(signManifest);
 		clickCustom(signConsentCheckBox);
 		clickCustom(signConfirmation);
-
 		clickCustom(closeConfirmation);
-
 		clickCustom(confirmDropOff);
 		clickCustom(completeDropOff); //check
 		clickCustom(closeConfirmation);
 		System.out.println("---Carrier Signed----");
+
 		//Receiver Sign
 		clickCustom(wasteTab);
 		clickCustom(acceptWasteButton);
@@ -522,11 +467,10 @@ public class ManifestPage {
 		System.out.println("---Receiver Signed----");
 		System.out.println("---Manifest Status is ----"+status.getDomAttribute("text"));
 
+		clickCustom(previousScreen);
+
 
 	}
-	
-	//driver.findElement(By.xpath("//XCUIElementTypeTextField[@name='RNE__Input__text-input']")).sendKeys("ON001173125");
-	//driver.findElement(By.xpath("//XCUIElementTypeOther[contains(@text,'ON001173125')]")).click();
-	//driver.findElement(By.xpath("(//XCUIElementTypeOther[@name='Select'])[2]")).click();
+
 
 }
