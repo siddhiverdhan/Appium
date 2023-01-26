@@ -177,23 +177,23 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Does not meet acceptance criteria'])[2] | (//android.view.ViewGroup[@text=\"Does not meet acceptance criteria\"])[1]/android.widget.TextView")
 	private WebElement refusalReasonAcceptance;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='I am partially refusing this waste.']/XCUIElementTypeOther/XCUIElementTypeOther | //android.widget.CheckBox[@content-desc=\"undefined\"]")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='I am partially refusing this waste.']/XCUIElementTypeOther/XCUIElementTypeOther | //android.widget.CheckBox[@content-desc=\"enabled  partial quantity refusal\"]")
 	private WebElement partialRefusalCheckbox;
 	
 	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])[1] | //android.widget.EditText[@content-desc=\"Quantity Refused / Units\"]")
 	private WebElement quantityRefused;
 	
-	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])[2] | //android.widget.EditText[@content-desc=\"Quantity Received\"]")
+	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])[2] | //android.widget.EditText[@content-desc=\"Quantity Accepted / Units\"]")
 	private WebElement quantityAccepted;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[3] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[5]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[3] | //android.view.ViewGroup[@content-desc=\"Quantity Refused Units\"]")
 	private WebElement unitRefused;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[6] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[1]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[6] | //android.view.ViewGroup[@content-desc=\"Quantity Received Units\"]")
 	private WebElement unitAccepted;
 
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[6] | //android.view.ViewGroup[@content-desc=\"kg\"]")
-	private WebElement unitPopup;
+	private WebElement unitPopupKg;
 
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Copy Quantity Shipped'] | //android.view.ViewGroup[@text='Copy Quantity Shipped'] ")
 	private WebElement copyQuantityShipped;
@@ -209,7 +209,7 @@ public class ManifestPage {
 
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"01 - Storage\"] | //android.view.ViewGroup[@content-desc=\"01 - Storage\"]")
-	private WebElement handlingCodePopUp;
+	private WebElement handlingCodePopUpStorage;
 
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept Waste'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.TextView")
 	private WebElement acceptWasteConfirm;
@@ -223,10 +223,18 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeButton[@name=\"Return\"] ")
 	private WebElement returnButton;
 
-	//driver.find_element_by_xpath(“//tag [contains( text(), ‘word’)]”)
+
 	@FindBy(xpath="//android.view.ViewGroup[contains(@content-desc,'MN-')]")
 	private WebElement manifestCard;
 
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Review Corrections\"]/android.view.ViewGroup/android.widget.TextView")
+	private WebElement reviewCorrections;
+
+	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.TextView[2]")
+	private WebElement wasteInformation;
+
+	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.widget.TextView")
+	private WebElement status;
 
 	public ManifestPage(WebDriver driver2) {
 		PageFactory.initElements(driver2, this);
