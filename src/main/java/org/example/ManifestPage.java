@@ -73,6 +73,10 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Select'])[2] | //android.view.ViewGroup[@content-desc=\"Select\"]/android.view.ViewGroup")
 	private WebElement selectButton;
 
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Cancel\"]/android.view.ViewGroup")
+	private WebElement cancelButton;
+
+
 	@FindBy(xpath="//android.view.ViewGroup[@text=\"Receiving Site Address\"]/android.widget.TextView")
 	private WebElement receivingSiteAddress;
 
@@ -80,6 +84,10 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Next - Add Waste Information  >\"])[2] | //android.view.ViewGroup[@content-desc=\"Next - Add Waste Information\"]/android.widget.TextView")
 	//@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Next - Add Waste Information\"]")
 	private WebElement addWasteButton;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Add Another Carrier\"]/android.widget.TextView[2]")
+	private WebElement addAdditionalCarrier;
+
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Scheduled Shipment Month\"]")
 	private WebElement selectShipMonth;
@@ -139,12 +147,12 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])[4] | //android.widget.EditText[@content-desc=\"Carrier 562-TestautomationCar's Vehicle 1 Registration Number\"]")
 	private WebElement vehicleRegNumber;
 	
-	@FindBy(xpath="(//XCUIElementTypeTextField[@name='-- '])[2] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[1]/android.widget.TextView[2]")
+	@FindBy(xpath="(//XCUIElementTypeTextField[@name='-- '])[2] | //android.view.ViewGroup[@content-desc=\"Carrier 562-TestautomationCar's Vehicle 1 Province or State\"]")
 	private WebElement vehicleProvince;
 
 
 	@FindBy(xpath="(//XCUIElementTypeTextField[@name='-- '])[2] | //android.view.ViewGroup[@content-desc=\"Alberta\"]")
-	private WebElement vehicleProvincePopup;
+	private WebElement vehicleProvincePopupAB;
 
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Sign Manifest'])[2] | //android.view.ViewGroup[@content-desc=\"Sign Manifest\"]/android.view.ViewGroup/android.widget.TextView")
 	private WebElement signManifest;
@@ -153,7 +161,7 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'] | //android.widget.CheckBox[@content-desc=\"Consent Toggle Disabled\"]")
 	private WebElement signConsentCheckBox;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='Confirm'])[2] | (//android.view.ViewGroup[@content-desc=\"undefined\"])[1]/android.view.ViewGroup/android.widget.TextView")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='Confirm'])[2] | //android.view.ViewGroup[@content-desc=\"Confirm\"]/android.view.ViewGroup")
 	private WebElement signConfirmation;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Close'])[2] | //android.view.ViewGroup[@content-desc=\"Close\"]/android.view.ViewGroup/android.widget.TextView")
@@ -168,16 +176,16 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Vertical scroll bar, 3 pages'] ")
 	private WebElement verticalScrollBar;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept'] | //android.view.ViewGroup[@text='Accept']/android.view.ViewGroup")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup[2]")
 	private WebElement acceptWasteButton;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse'] | //android.view.ViewGroup[@text='Refuse']/android.view.ViewGroup")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup[3]")
 	private WebElement refuseWasteButton;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Does not meet acceptance criteria'])[2] | (//android.view.ViewGroup[@text=\"Does not meet acceptance criteria\"])[1]/android.widget.TextView")
 	private WebElement refusalReasonAcceptance;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='I am partially refusing this waste.']/XCUIElementTypeOther/XCUIElementTypeOther | //android.widget.CheckBox[@content-desc=\"enabled  partial quantity refusal\"]")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='I am partially refusing this waste.']/XCUIElementTypeOther/XCUIElementTypeOther | //android.widget.CheckBox[@content-desc=\"disabled partial quantity refusal\"]")
 	private WebElement partialRefusalCheckbox;
 	
 	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])[1] | //android.widget.EditText[@content-desc=\"Quantity Refused / Units\"]")
@@ -195,7 +203,7 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[6] | //android.view.ViewGroup[@content-desc=\"kg\"]")
 	private WebElement unitPopupKg;
 
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Copy Quantity Shipped'] | //android.view.ViewGroup[@text='Copy Quantity Shipped'] ")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Copy Quantity Shipped'] | //android.view.ViewGroup[@content-desc=\"Copy Quantity Shipped\"]/android.widget.TextView")
 	private WebElement copyQuantityShipped;
 	
 	@FindBy(xpath="//XCUIElementTypeTextField[@name='RNE__Input__text-input'] | //android.widget.EditText[@content-desc=\"Quantity Received\"]")
@@ -204,14 +212,14 @@ public class ManifestPage {
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[3] | //android.view.ViewGroup[@content-desc=\"Quantity Received Units\"]" )
 	private WebElement unitReceived;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[5] | //android.view.ViewGroup[@content-desc=\"undefined\"]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[5] | //android.view.ViewGroup[@content-desc=\"Select Handling Code\"]")
 	private WebElement handlingCode;
 
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"01 - Storage\"] | //android.view.ViewGroup[@content-desc=\"01 - Storage\"]")
 	private WebElement handlingCodePopUpStorage;
 
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept Waste'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.TextView")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept Waste'] | //android.view.ViewGroup[@content-desc=\"Accept Waste\"]/android.widget.TextView")
 	private WebElement acceptWasteConfirm;
 	
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse Waste'] | //android.widget.TextView[@text=\"Refuse Waste\"]")
@@ -223,18 +231,32 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeButton[@name=\"Return\"] ")
 	private WebElement returnButton;
 
-
+	@FindBy(xpath="//android.widget.Switch[@content-desc=\"Manifest does not include  waste which was previously refused\"]" )
+	private WebElement refusedWasteManifest;
 	@FindBy(xpath="//android.view.ViewGroup[contains(@content-desc,'MN-')]")
 	private WebElement manifestCard;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Review Corrections\"]/android.view.ViewGroup/android.widget.TextView")
 	private WebElement reviewCorrections;
 
-	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.TextView[2]")
+	@FindBy(xpath="//android.widget.TextView[@content-desc=\"WASTE INFORMATION\"]")
 	private WebElement wasteInformation;
 
-	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.widget.TextView")
+	@FindBy(xpath="//android.widget.TextView[contains(@content-desc,'Manifest Status is')]")
 	private WebElement status;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Navigate to Previous Screen\"]/android.widget.TextView")
+	private WebElement previousScreen;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Save Button\"]/android.view.ViewGroup")
+	private WebElement saveButton;
+
+	@FindBy(xpath="//android.widget.CheckBox[@content-desc=\"undefined\"]")
+	private WebElement dangerousGoodsMain;
+
+	@FindBy(xpath="//android.widget.CheckBox[@content-desc=\"This waste is not dangerous goods\"]")
+	private WebElement dangerousGoodsReceive;
+
 
 	public ManifestPage(WebDriver driver2) {
 		PageFactory.initElements(driver2, this);
@@ -462,7 +484,7 @@ public class ManifestPage {
 		clickCustom(vehicleProvince);
 		//driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"Ontario\"))"));
 
-		clickCustom(vehicleProvincePopup);
+		clickCustom(vehicleProvincePopupAB);
 		clickCustom(signManifest);
 		clickCustom(signConsentCheckBox);
 		clickCustom(signConfirmation);
@@ -472,19 +494,34 @@ public class ManifestPage {
 		clickCustom(confirmDropOff);
 		clickCustom(completeDropOff); //check
 		clickCustom(closeConfirmation);
-
+		System.out.println("---Carrier Signed----");
 		//Receiver Sign
 		clickCustom(wasteTab);
 		clickCustom(acceptWasteButton);
 		clickCustom(copyQuantityShipped);
 		clickCustom(handlingCode);
-		clickCustom(handlingCodePopUp);
-		clickCustom(acceptWasteButton);
+		clickCustom(handlingCodePopUpStorage);
+		clickCustom(acceptWasteConfirm);
 		clickCustom(signManifest);
+		for(int i=0; i<2; i++) {
+
+			if(!isVisible(signConsentCheckBox,2)){
+				clickCustom(signManifest);
+				System.out.println("---Sign Checkbox not visible--looping for --" + i);
+			}
+			else {
+				System.out.println("---Sign Checkbox visible--breaking--");
+				break;
+			}
+		}
+
 		clickCustom(signConsentCheckBox);
 		clickCustom(signConfirmation);
 
 		clickCustom(closeConfirmation);
+		System.out.println("---Receiver Signed----");
+		System.out.println("---Manifest Status is ----"+status.getDomAttribute("text"));
+
 
 	}
 	
