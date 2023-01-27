@@ -3,7 +3,9 @@ package org.example;
 import java.awt.*;
 import java.awt.dnd.Autoscroll;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.sql.Driver;
+import java.time.DateTimeException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
@@ -27,13 +29,6 @@ public class ManifestPage {
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Navigate to Create Manifest Screen\"]/android.widget.TextView[1]")
 	private WebElement newManifest;
 
-	/*
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='-- '])[3]")
-	private WebElement searchField;
-	
-	@FindBy(xpath="(//XCUIElementTypeTextField[@name='RNE__Input__text-input'])")
-	private WebElement searchText;
-	*/
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Select Generator\"]")
 	private WebElement searchGeneratorText;
 
@@ -82,7 +77,6 @@ public class ManifestPage {
 
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Next - Add Waste Information  >\"])[2] | //android.view.ViewGroup[@content-desc=\"Next - Add Waste Information\"]/android.widget.TextView")
-	//@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Next - Add Waste Information\"]")
 	private WebElement addWasteButton;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Add Another Carrier\"]/android.widget.TextView[2]")
@@ -178,13 +172,13 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Vertical scroll bar, 3 pages'] ")
 	private WebElement verticalScrollBar;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup[2]")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept'] | //android.view.ViewGroup[@content-desc=\"Accept Button\"]")
 	private WebElement acceptWasteButton;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse'] | /hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup[3]")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse'] | //android.view.ViewGroup[@content-desc=\"Refuse Button\"]")
 	private WebElement refuseWasteButton;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='Does not meet acceptance criteria'])[2] | (//android.view.ViewGroup[@text=\"Does not meet acceptance criteria\"])[1]/android.widget.TextView")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name='Does not meet acceptance criteria'])[2] | //android.view.ViewGroup[@content-desc=\"Does not meet acceptance criteria\"]")
 	private WebElement refusalReasonAcceptance;
 	
 	@FindBy(xpath="//XCUIElementTypeOther[@name='I am partially refusing this waste.']/XCUIElementTypeOther/XCUIElementTypeOther | //android.widget.CheckBox[@content-desc=\"disabled partial quantity refusal\"]")
@@ -224,7 +218,7 @@ public class ManifestPage {
 	@FindBy(xpath="//XCUIElementTypeOther[@name='Accept Waste'] | //android.view.ViewGroup[@content-desc=\"Accept Waste\"]/android.widget.TextView")
 	private WebElement acceptWasteConfirm;
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse Waste'] | //android.widget.TextView[@text=\"Refuse Waste\"]")
+	@FindBy(xpath="//XCUIElementTypeOther[@name='Refuse Waste'] | //android.view.ViewGroup[@content-desc=\"Refuse Waste\"]")
 	private WebElement refuseWasteConfirm;
 	
 	@FindBy(xpath="//XCUIElementTypeOther[@name=' Add Another Waste']")
@@ -245,10 +239,10 @@ public class ManifestPage {
 	private WebElement wasteInformation;
 
 	@FindBy(xpath="//android.widget.TextView[contains(@content-desc,'Manifest Status is')]")
-	private WebElement status;
+	public WebElement status;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Navigate to Previous Screen\"]/android.widget.TextView")
-	private WebElement previousScreen;
+	public WebElement previousScreen;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Save Button\"]/android.view.ViewGroup")
 	private WebElement saveButton;
@@ -312,28 +306,31 @@ public class ManifestPage {
 		 AppiumDriver dr = null;
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-/* Working New Manifest Click - P2
-		WebElement el1 = (WebElement) driver.findElement (By.xpath("//android.view.ViewGroup[@content-desc=\"Navigate to Create Manifest Screen\"]/android.widget.TextView[2]"));
-		el1.click();
-		WebElement el2 = (WebElement) driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"Select Generator\"]"));
-		el2.click();
-*/		waitForClickable(newManifest,60);
+
+		waitForClickable(newManifest,60);
 		clickCustom(newManifest);
 
+
+
+
+	}
+
+	public void addGenerator(String generator){
 		//Select Generator
 		clickCustom(searchGeneratorText);
-		
-		sendKeysCustom(searchGeneratorPopupText,"ATC1 Business" );
+
+		sendKeysCustom(searchGeneratorPopupText,generator);
 		clickCustom(generatorSearchResult);
 		clickCustom(selectGeneratorButton);
+	}
 
-
-		
+	public void addCarrier(String carrier){
 		//Select Carrier
 		for(int i=0; i<2; i++) {
 			clickCustom(searchCarrierText);
+			System.out.println(searchCarrierText+carrier+"Count"+i);
 			if(isVisible(searchCarrierPopupText,2)){
-				sendKeysCustom(searchCarrierPopupText,"TestautomationCar" );
+				sendKeysCustom(searchCarrierPopupText,carrier);
 				break;
 			}
 		}
@@ -341,13 +338,15 @@ public class ManifestPage {
 		clickCustom(carrierSearchResult);
 		clickCustom(selectButton);
 
-		scrollCustom();
+	}
 
-		//Select Receiver
+	public void addReceiver(String receiver){
 		for(int i=0; i<2; i++) {
 			clickCustom(searchReceiverText);
+			System.out.println(searchReceiverText+receiver+"Count"+i);
+
 			if(isVisible(searchReceiverPopupText,2)){
-				sendKeysCustom(searchReceiverPopupText,"TestAutomationRec" );
+				sendKeysCustom(searchReceiverPopupText,receiver);
 				break;
 			}
 		}
@@ -356,9 +355,11 @@ public class ManifestPage {
 
 		clickCustom(receiverSearchResult);
 		clickCustom(selectButton);
+	}
 
+	public void addWasteInfo(){
 		//Navigate to Waste
-		
+
 		for(int i=0; i<2; i++) {
 
 			if(isVisible(selectShipMonth,2)){
@@ -371,7 +372,7 @@ public class ManifestPage {
 
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		clickCustom(addWasteButton);
-
+		//String tDate = today();
 		clickCustom(selectShipMonth);
 		clickCustom(selectMonth);
 		clickCustom(selectShipDate);
@@ -385,7 +386,10 @@ public class ManifestPage {
 		clickCustom(selectDate);
 		clickCustom(selectArrivalYear);
 		clickCustom(selectYear);
-		scrollCustom();
+	}
+
+	public void addWaste(){
+
 		clickCustom(selectWaste);
 
 		//Select Waste
@@ -411,21 +415,37 @@ public class ManifestPage {
 			scrollCustom();
 		}
 
+	}
+
+	public void addShippingInfo(String shipName , String qty){
 		//enter waste details
 
-		sendKeysCustom(shippingName,"Shipping name");
-		sendKeysCustom(quantity,"350");
+		sendKeysCustom(shippingName,shipName);
+		sendKeysCustom(quantity,qty);
 		clickCustom(unit);
 		clickCustom(unitKg);
 		clickCustom(readyForShipment);
+	}
 
+	public void dropOff(){
+		//Drop Off
+		clickCustom(confirmDropOff);
+		clickCustom(completeDropOff); //check
+		clickCustom(closeConfirmation);
+		System.out.println("---Carrier Signed----");
+
+	}
+
+	public void generatorSign(){
 		//Generator Sign
 		clickCustom(manifestCard);
 		clickCustom(signManifest);
 		clickCustom(signConsentCheckBox);
 		clickCustom(signConfirmation);
 		clickCustom(closeConfirmation);
+	}
 
+	public void carrierSign(){
 		//Carrier Sign
 		clickCustom(vehicleTab);
 		sendKeysCustom(vehicleRegNumber,"Testing");
@@ -435,18 +455,42 @@ public class ManifestPage {
 		clickCustom(signConsentCheckBox);
 		clickCustom(signConfirmation);
 		clickCustom(closeConfirmation);
-		clickCustom(confirmDropOff);
-		clickCustom(completeDropOff); //check
-		clickCustom(closeConfirmation);
-		System.out.println("---Carrier Signed----");
+	}
 
-		//Receiver Sign
+	public void acceptWaste(){
 		clickCustom(wasteTab);
 		clickCustom(acceptWasteButton);
 		clickCustom(copyQuantityShipped);
 		clickCustom(handlingCode);
 		clickCustom(handlingCodePopUpStorage);
 		clickCustom(acceptWasteConfirm);
+	}
+
+	public void refuseWaste(String refusalType){
+		clickCustom(wasteTab);
+		clickCustom(refuseWasteButton);
+		clickCustom(refusalReasonAcceptance);
+		if (refusalType == "Partial"){
+			clickCustom(partialRefusalCheckbox);
+			sendKeysCustom(quantityAccepted,"300");
+			clickCustom(unitAccepted);
+			clickCustom(unitPopupKg);
+			sendKeysCustom(quantityRefused,"50");
+			clickCustom(unitRefused);
+			clickCustom(unitPopupKg);
+			clickCustom(handlingCode);
+			clickCustom(handlingCodePopUpStorage);
+		}
+
+
+
+
+		clickCustom(refuseWasteConfirm);
+	}
+
+	public void receiverSign(){
+		//Receiver Sign
+
 		clickCustom(signManifest);
 		for(int i=0; i<2; i++) {
 
@@ -465,12 +509,6 @@ public class ManifestPage {
 
 		clickCustom(closeConfirmation);
 		System.out.println("---Receiver Signed----");
-		System.out.println("---Manifest Status is ----"+status.getDomAttribute("text"));
-
-		clickCustom(previousScreen);
-
-
 	}
-
 
 }
