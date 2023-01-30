@@ -76,7 +76,7 @@ public class ManifestPage {
 	private WebElement receivingSiteAddress;
 
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Next - Add Waste Information  >\"])[2] | //android.view.ViewGroup[@content-desc=\"Next - Add Waste Information\"]/android.widget.TextView")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Next - Add Waste Information  >\"])[2] | //android.view.ViewGroup[@content-desc=\"Next - Add Waste Information\"]")
 	private WebElement addWasteButton;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Add Another Carrier\"]/android.widget.TextView[2]")
@@ -233,7 +233,7 @@ public class ManifestPage {
 	private WebElement manifestCard;
 
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Review Corrections\"]/android.view.ViewGroup/android.widget.TextView")
-	private WebElement reviewCorrections;
+	public WebElement reviewCorrections;
 
 	@FindBy(xpath="//android.widget.TextView[@content-desc=\"WASTE INFORMATION\"]")
 	private WebElement wasteInformation;
@@ -253,6 +253,15 @@ public class ManifestPage {
 	@FindBy(xpath="//android.widget.CheckBox[@content-desc=\"This waste is not dangerous goods\"]")
 	private WebElement dangerousGoodsReceive;
 
+
+	@FindBy(xpath="//android.widget.EditText[@content-desc=\"Number of Packages (optional)\"]")
+	private WebElement packagesReceive;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"function headerText() { [bytecode] }\"]/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.TextView\n")
+	private WebElement signMessage;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"EDIT SHIPPING INFORMATION\"]")
+	private WebElement editShippingInfo;
 
 	public ManifestPage(WebDriver driver2) {
 		PageFactory.initElements(driver2, this);
@@ -287,6 +296,7 @@ public class ManifestPage {
 	
 	public void sendKeysCustom(WebElement ele, String text) {
 		waitForVisible(ele, 60);
+		waitForClickable(ele,60);
 		ele.sendKeys(text);
 		
 	}
@@ -324,16 +334,36 @@ public class ManifestPage {
 		clickCustom(selectGeneratorButton);
 	}
 
+	/*public void addCarrier(String carrier){
+		//Select Carrier
+		for(int i=0; i<50; i++) {
+			//waitForClickable(searchCarrierText,5);
+			//clickCustom(searchCarrierText);
+
+			if(isVisible(searchCarrierPopupText,3)) {
+				System.out.println(searchCarrierPopupText+carrier+" if Count "+i);
+				waitForClickable(searchCarrierPopupText,3);
+				sendKeysCustom(searchCarrierPopupText, "TestautomationCar");
+				break;
+			}
+			else {
+				System.out.println(searchCarrierPopupText+carrier+" else Count "+i);
+				clickCustom(searchCarrierText);
+
+			}
+}
+
+	}*/
 	public void addCarrier(String carrier){
 		//Select Carrier
 		for(int i=0; i<2; i++) {
 			clickCustom(searchCarrierText);
-			System.out.println(searchCarrierText+carrier+"Count"+i);
 			if(isVisible(searchCarrierPopupText,2)){
-				sendKeysCustom(searchCarrierPopupText,carrier);
+				sendKeysCustom(searchCarrierPopupText,carrier );
 				break;
 			}
 		}
+
 
 		clickCustom(carrierSearchResult);
 		clickCustom(selectButton);
@@ -341,15 +371,16 @@ public class ManifestPage {
 	}
 
 	public void addReceiver(String receiver){
-		for(int i=0; i<2; i++) {
-			clickCustom(searchReceiverText);
-			System.out.println(searchReceiverText+receiver+"Count"+i);
 
-			if(isVisible(searchReceiverPopupText,2)){
-				sendKeysCustom(searchReceiverPopupText,receiver);
-				break;
+
+			for(int i=0; i<2; i++) {
+				clickCustom(searchReceiverText);
+				if(isVisible(searchReceiverPopupText,2)){
+					sendKeysCustom(searchReceiverPopupText,receiver );
+					break;
+				}
 			}
-		}
+
 
 
 
@@ -360,9 +391,9 @@ public class ManifestPage {
 	public void addWasteInfo(){
 		//Navigate to Waste
 
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<5; i++) {
 
-			if(isVisible(selectShipMonth,2)){
+			if(isVisible(selectShipMonth,3)) {
 				clickCustom(addWasteButton);
 				break;
 			}
@@ -397,7 +428,7 @@ public class ManifestPage {
 
 		for(int i=0; i<10; i++) {
 
-			if(!isVisible(selectArrivalMonth,5)){
+			if(!isVisible(selectArrivalMonth,5)) {
 				clickCustom(selectWaste111A);
 				clickCustom(selectButton);
 			}
@@ -429,6 +460,8 @@ public class ManifestPage {
 
 	public void dropOff(){
 		//Drop Off
+		//Confirm that you have dropped off the waste listed on this manifest to the Receiver indicated. You will not be able to edit the manifest after clicking Confirm.
+		//clickCustom(reviewCorrections);
 		clickCustom(confirmDropOff);
 		clickCustom(completeDropOff); //check
 		clickCustom(closeConfirmation);
@@ -436,25 +469,45 @@ public class ManifestPage {
 
 	}
 
-	public void generatorSign(){
+	public void generatorSign(String stage){
 		//Generator Sign
-		clickCustom(manifestCard);
-		clickCustom(signManifest);
-		clickCustom(signConsentCheckBox);
-		clickCustom(signConfirmation);
-		clickCustom(closeConfirmation);
+		//I certify that the information contained in the manifest is correct and complete. I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labelled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations.
+		//I certify that the information contained in the corrections tab of this manifest is correct and complete. I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labelled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations.
+		if(stage == "create") {
+			clickCustom(manifestCard);
+			clickCustom(signManifest);
+			clickCustom(signConsentCheckBox);
+			clickCustom(signConfirmation);
+			clickCustom(closeConfirmation);
+		}
+		else{
+			clickCustom(reviewCorrections);
+			clickCustom(signConsentCheckBox);
+			clickCustom(signConfirmation);
+			clickCustom(closeConfirmation);
+		}
 	}
 
-	public void carrierSign(){
+	public void carrierSign(String stage){
 		//Carrier Sign
-		clickCustom(vehicleTab);
-		sendKeysCustom(vehicleRegNumber,"Testing");
-		clickCustom(vehicleProvince);
-		clickCustom(vehicleProvincePopupAB);
-		clickCustom(signManifest);
-		clickCustom(signConsentCheckBox);
-		clickCustom(signConfirmation);
-		clickCustom(closeConfirmation);
+		//I certify that I have received waste or recyclable material from the generator/consignor for delivery to the receiver/consignee and that the information provided is complete and correct.
+		//I certify that the information contained in the corrections tab of this manifest is correct and complete. I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labelled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations.
+
+		if(stage == "create") {
+			clickCustom(vehicleTab);
+			sendKeysCustom(vehicleRegNumber, "Testing");
+			clickCustom(vehicleProvince);
+			clickCustom(vehicleProvincePopupAB);
+			clickCustom(signManifest);
+			clickCustom(signConsentCheckBox);
+			clickCustom(signConfirmation);
+			clickCustom(closeConfirmation);
+		}
+		else{
+			clickCustom(signConsentCheckBox);
+			clickCustom(signConfirmation);
+			clickCustom(closeConfirmation);
+		}
 	}
 
 	public void acceptWaste(){
@@ -466,11 +519,11 @@ public class ManifestPage {
 		clickCustom(acceptWasteConfirm);
 	}
 
-	public void refuseWaste(String refusalType){
+	public void refuseWaste(String refusalType, String corrections){
 		clickCustom(wasteTab);
 		clickCustom(refuseWasteButton);
 		clickCustom(refusalReasonAcceptance);
-		if (refusalType == "Partial"){
+		if(refusalType == "Partial"){
 			clickCustom(partialRefusalCheckbox);
 			sendKeysCustom(quantityAccepted,"300");
 			clickCustom(unitAccepted);
@@ -482,15 +535,19 @@ public class ManifestPage {
 			clickCustom(handlingCodePopUpStorage);
 		}
 
+		if(corrections == "True"){
+			scrollCustom();
+			//clickCustom(dangerousGoodsReceive);
+			sendKeysCustom(packagesReceive, "35");
 
-
+		}
 
 		clickCustom(refuseWasteConfirm);
 	}
 
 	public void receiverSign(){
 		//Receiver Sign
-
+		//I certify that the receiver information contained on the manifest is correct and complete
 		clickCustom(signManifest);
 		for(int i=0; i<2; i++) {
 
@@ -509,6 +566,17 @@ public class ManifestPage {
 
 		clickCustom(closeConfirmation);
 		System.out.println("---Receiver Signed----");
+	}
+
+	public void assertMessage(String field, String expMessage){
+		if(field=="status"){
+			System.out.println("---Manifest Status is ----" + status.getDomAttribute("text"));
+			String currentStatus = status.getDomAttribute("text");
+			if(currentStatus == expMessage){
+				System.out.println("---Manifest created--Test Result = PASS--");
+			} else
+				System.out.println("---Manifest created--Test Result = FAIL--");
+		}
 	}
 
 }

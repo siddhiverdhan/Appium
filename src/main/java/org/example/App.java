@@ -54,7 +54,7 @@ getDriver().quit();
 }
 
 @SuppressWarnings("deprecation")
-@Test(enabled = false)
+@Test(enabled = true)
 public void tC1() {
 
 getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -76,24 +76,21 @@ getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	manifestPage.scrollCustom();
 	manifestPage.addWaste();
 	manifestPage.addShippingInfo("Shipping Name", "350");
-	manifestPage.generatorSign();
+	manifestPage.generatorSign("create");
 
-	manifestPage.carrierSign();
+	manifestPage.carrierSign("create");
 	manifestPage.dropOff();
 	manifestPage.acceptWaste();
 	manifestPage.receiverSign();
 	System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
 	String finalStatus = manifestPage.status.getDomAttribute("text");
-	if(finalStatus == "Completed"){
-		System.out.println("---Manifest 1 created--Test Result = PASS--");
-	}
-	else
-		System.out.println("---Manifest 1 created--Test Result = FAIL--");
+	manifestPage.assertMessage("finalStatus","Completed");
 	manifestPage.clickCustom(manifestPage.previousScreen);
-System.out.println("---Manifest 1 created--Test Result = --"+finalStatus);
+
+	System.out.println("---Manifest 1 created--Test Result = --"+manifestPage.status.getDomAttribute("text"));
 }
 
-@Test(enabled = false)
+@Test(enabled = true)
 public void tC2() {
 
 
@@ -112,22 +109,18 @@ public void tC2() {
 		manifestPage.scrollCustom();
 		manifestPage.addWaste();
 		manifestPage.addShippingInfo("Shipping Name", "350");
-		manifestPage.generatorSign();
+		manifestPage.generatorSign("create");
 
-		manifestPage.carrierSign();
+		manifestPage.carrierSign("create");
 		manifestPage.dropOff();
-		manifestPage.refuseWaste("Full");
+		manifestPage.refuseWaste("Full", "False");
 		manifestPage.receiverSign();
 		System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
 		String finalStatus = manifestPage.status.getDomAttribute("text");
-		if(finalStatus == "Completed: Fully Refused"){
-			System.out.println("---Manifest 2 created--Test Result = PASS--");
-		}
-		else
-			System.out.println("---Manifest 2 created--Test Result = FAIL--");
+		manifestPage.assertMessage("finalStatus","Completed: Fully Refused");
 		manifestPage.clickCustom(manifestPage.previousScreen);
 
-		System.out.println("---Manifest 2 created--Test Result = --"+finalStatus);
+		System.out.println("---Manifest 2 created--Test Result = --"+manifestPage.status.getDomAttribute("text"));
 
 	}
 
@@ -150,22 +143,54 @@ public void tC2() {
 		manifestPage.scrollCustom();
 		manifestPage.addWaste();
 		manifestPage.addShippingInfo("Shipping Name", "350");
-		manifestPage.generatorSign();
+		manifestPage.generatorSign("create");
 
-		manifestPage.carrierSign();
+		manifestPage.carrierSign("create");
 		manifestPage.dropOff();
-		manifestPage.refuseWaste("Partial");
+		manifestPage.refuseWaste("Partial", "False");
 		manifestPage.receiverSign();
-		System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
-		String finalStatus = manifestPage.status.getDomAttribute("text");
-		if(finalStatus == "Completed: Fully Refused"){
-			System.out.println("---Manifest 3 created--Test Result = PASS--");
-		}
-		else
-			System.out.println("---Manifest 3 created--Test Result = FAIL--");
+		manifestPage.assertMessage("finalStatus","Completed: Partially Refused");
 		manifestPage.clickCustom(manifestPage.previousScreen);
 
-		System.out.println("---Manifest 3 created--Test Result = --"+finalStatus);
+		System.out.println("---Manifest 3 created--Test Result = --"+manifestPage.status.getAttribute("text"));
+
+	}
+
+	@Test(enabled = true)
+	public void tC4() {
+
+
+
+		ManifestPage manifestPage= new ManifestPage(driver);
+
+		manifestPage.createManifest();
+		manifestPage.addGenerator("ATC1 Business");
+
+		manifestPage.addCarrier("TestautomationCar");
+
+		manifestPage.scrollCustom();
+		manifestPage.addReceiver("TestAutomationRec");
+
+		manifestPage.addWasteInfo();
+		manifestPage.scrollCustom();
+		manifestPage.addWaste();
+		manifestPage.addShippingInfo("Shipping Name", "350");
+		manifestPage.generatorSign("create");
+
+		manifestPage.carrierSign("create");
+		manifestPage.dropOff();
+		manifestPage.refuseWaste("Partial", "True");
+		manifestPage.receiverSign();
+
+		//manifestPage.clickCustom(manifestPage.reviewCorrections);
+		manifestPage.generatorSign("correction");
+
+		manifestPage.carrierSign("correction");
+
+		manifestPage.assertMessage("finalStatus","Completed: Partially Refused");
+		manifestPage.clickCustom(manifestPage.previousScreen);
+
+		System.out.println("---Manifest 4 created--Test Result = --"+manifestPage.status.getAttribute("text"));
 
 	}
 
