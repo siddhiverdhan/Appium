@@ -39,7 +39,7 @@ public class IOS_TestCases extends BaseTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void iOS_AcceptWithCorrections() {
 
 		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -68,7 +68,7 @@ public class IOS_TestCases extends BaseTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void iOS_FullRefusal() {
 
 		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -122,7 +122,7 @@ public class IOS_TestCases extends BaseTest {
 	}
 
 	@SuppressWarnings("deprecation")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void iOS_PartialRefusalWithCorrections() {
 
 		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);

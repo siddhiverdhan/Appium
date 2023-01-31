@@ -56,7 +56,7 @@ getDriver().quit();
 }
 
 @SuppressWarnings("deprecation")
-@Test(enabled = false)
+@Test(enabled = true)
 public void android_AcceptWithoutAnyCorrections() {
 
 
@@ -94,7 +94,7 @@ public void android_AcceptWithoutAnyCorrections() {
 		ANDROID_ManifestPage.takeScreenShot("test",driver);
 	}
 	}
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void android_AcceptWithCorrections() {
 
 
@@ -134,7 +134,7 @@ public void android_AcceptWithoutAnyCorrections() {
 	}
 
 
-@Test(enabled = false)
+@Test(enabled = true)
 public void android_FullRefusal() {
 
 
@@ -168,7 +168,7 @@ public void android_FullRefusal() {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void android_PartialRefusalWithoutAnyCorrections() {
 
 
