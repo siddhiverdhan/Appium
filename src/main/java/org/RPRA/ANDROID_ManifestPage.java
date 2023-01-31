@@ -1,37 +1,22 @@
 package org.RPRA;
 
-import java.awt.*;
-import java.awt.dnd.Autoscroll;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
-import java.sql.Driver;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.concurrent.TimeUnit;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.devtools.v85.runtime.model.TimeDelta;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.appium.java_client.ios.IOSDriver;
-
 import static java.time.LocalTime.now;
 
-public class ManifestPage {
+public class ANDROID_ManifestPage {
 	
 	private WebDriver driver;
 	
@@ -277,7 +262,7 @@ public class ManifestPage {
 	private WebElement handlingCodeLabel;
 
 
-	public ManifestPage(WebDriver driver2) {
+	public ANDROID_ManifestPage(WebDriver driver2) {
 		PageFactory.initElements(driver2, this);
 		this.driver=driver2;
 		
