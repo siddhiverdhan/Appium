@@ -1,4 +1,4 @@
-package org.RPRA;
+package ca.rpra.utils;
 
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;

@@ -1,5 +1,8 @@
-package org.RPRA;
+package ca.rpra.test;
 
+import ca.rpra.page.ANDROID_LoginPage;
+import ca.rpra.page.ANDROID_ManifestPage;
+import ca.rpra.utils.ReadProperties;
 import io.appium.java_client.AppiumDriver;
 /**
  * Hello world!
@@ -23,19 +26,20 @@ private WebDriver driver;
 @BeforeClass
 public void setUp() throws MalformedURLException {
 	//Setting Desired Capabilities
+	ReadProperties rp = new ReadProperties();
 	DesiredCapabilities capabilities = new DesiredCapabilities();
 
-	capabilities.setCapability("app_name","RPRA HazTrack");
-	capabilities.setCapability("platformName", "android");
-	capabilities.setCapability("deviceName", "emulator-5554");
-	capabilities.setCapability("appPackage", "rpra.haztrack.internal");
-	capabilities.setCapability( "appActivity", "com.rpra.MainActivity");
-	capabilities.setCapability("BROWSER_NAME","Chrome");
+	capabilities.setCapability("app_name",rp.getValue("app_name"));
+	capabilities.setCapability("platformName", rp.getValue("platformName"));
+	capabilities.setCapability("deviceName", rp.getValue("deviceName"));
+	capabilities.setCapability("appPackage", rp.getValue("appPackage"));
+	capabilities.setCapability( "appActivity", rp.getValue("appActivity"));
+	capabilities.setCapability("BROWSER_NAME",rp.getValue("BROWSER_NAME"));
 	capabilities.setCapability("appium:ensureWebviewsHavePages", true);
 	capabilities.setCapability("appium:nativeWebScreenshot", true);
 	capabilities.setCapability("appium:connectHardwareKeyboard", true);
 
-	setDriver(new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities));
+	setDriver(new AppiumDriver(new URL(rp.getValue("huburl")), capabilities));
 
 	//driver.resetApp();
 	ANDROID_LoginPage ANDROIDLoginPage = new ANDROID_LoginPage(driver);
@@ -53,13 +57,10 @@ getDriver().quit();
 
 @SuppressWarnings("deprecation")
 @Test(enabled = false)
-public void tC1() {
+public void android_AcceptWithoutAnyCorrections() {
 
 
 	getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-
-
 
 	ANDROID_ManifestPage ANDROIDManifestPage = new ANDROID_ManifestPage(driver);
 
@@ -93,9 +94,48 @@ public void tC1() {
 		ANDROID_ManifestPage.takeScreenShot("test",driver);
 	}
 	}
+	@Test(enabled = false)
+	public void android_AcceptWithCorrections() {
+
+
+		getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+		ANDROID_ManifestPage ANDROIDManifestPage = new ANDROID_ManifestPage(driver);
+
+		try {
+			ANDROIDManifestPage.createManifest();
+			ANDROIDManifestPage.addGenerator("ATC1 Business");
+
+			ANDROIDManifestPage.addCarrier("TestautomationCar");
+
+			ANDROIDManifestPage.scrollCustom();
+			ANDROIDManifestPage.addReceiver("TestAutomationRec");
+
+			ANDROIDManifestPage.addWasteInfo();
+			ANDROIDManifestPage.scrollCustom();
+			ANDROIDManifestPage.addWaste();
+			ANDROIDManifestPage.addShippingInfo("Shipping Name", "350");
+			ANDROIDManifestPage.generatorSign("create");
+
+			ANDROIDManifestPage.carrierSign("create");
+			ANDROIDManifestPage.dropOff();
+			ANDROIDManifestPage.acceptWaste();
+			ANDROIDManifestPage.receiverSign();
+			//System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
+//	String finalStatus = manifestPage.status.getDomAttribute("text");
+			ANDROIDManifestPage.assertMessage("finalStatus", "Completed");
+			ANDROIDManifestPage.clickCustom(ANDROIDManifestPage.previousScreen);
+
+			System.out.println("---Manifest 1 created--Test Result = --" + ANDROIDManifestPage.status.getDomAttribute("text"));
+		}
+		catch(Exception e){
+			ANDROID_ManifestPage.takeScreenShot("test",driver);
+		}
+	}
+
 
 @Test(enabled = false)
-public void tC2() {
+public void android_FullRefusal() {
 
 
 
@@ -129,7 +169,7 @@ public void tC2() {
 	}
 
 	@Test(enabled = false)
-	public void tC3() {
+	public void android_PartialRefusalWithoutAnyCorrections() {
 
 
 
@@ -161,7 +201,7 @@ public void tC2() {
 	}
 
 	@Test(enabled = true)
-	public void tC4() {
+	public void android_PartialRefusalWithCorrections() {
 
 
 
