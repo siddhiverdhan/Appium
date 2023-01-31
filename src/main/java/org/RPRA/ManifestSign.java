@@ -1,4 +1,4 @@
-package org.example;
+package org.RPRA;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Keys;

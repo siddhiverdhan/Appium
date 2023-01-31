@@ -1,4 +1,4 @@
-package org.example;
+package org.RPRA;
 
 
 
@@ -15,7 +15,6 @@ import java.time.Duration;
 
 public class LoginPage {
 	private WebDriver driver;
-	/*
 
 	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[3]/android.widget.EditText")
 
@@ -29,8 +28,7 @@ public class LoginPage {
 
 	@FindBy(xpath ="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[6]/android.widget.Button")
 	 private WebElement signIn;
-	*/
-
+/*
 	@FindBy(xpath="(//android.widget.EditText)[1]")
 	private WebElement user_name;
 	@FindBy(xpath="(//android.widget.EditText)[2]")
@@ -38,7 +36,7 @@ public class LoginPage {
 	@FindBy(xpath ="//android.widget.Button")
 	private WebElement signIn;
 
-
+*/
 	public LoginPage(WebDriver driver) {
 
 	this.driver =  driver;

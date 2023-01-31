@@ -1,12 +1,17 @@
-package org.example;
+package org.RPRA;
 
 import java.awt.*;
 import java.awt.dnd.Autoscroll;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Driver;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 import io.appium.java_client.AppiumBy;
@@ -14,13 +19,17 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
+import org.openqa.selenium.devtools.v85.runtime.model.TimeDelta;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.ios.IOSDriver;
+
+import static java.time.LocalTime.now;
 
 public class ManifestPage {
 	
@@ -263,6 +272,11 @@ public class ManifestPage {
 	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"EDIT SHIPPING INFORMATION\"]")
 	private WebElement editShippingInfo;
 
+
+	@FindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.widget.TextView[13]")
+	private WebElement handlingCodeLabel;
+
+
 	public ManifestPage(WebDriver driver2) {
 		PageFactory.initElements(driver2, this);
 		this.driver=driver2;
@@ -276,11 +290,16 @@ public class ManifestPage {
 		
 	}
 
-	public boolean isVisible(WebElement ele, int time) {
+	public boolean isVisible(WebElement ele, Duration time) {
 		//waitForVisible(ele, time);
-
+		LocalTime startTime, endTime;
+		startTime = now();
 		try{
-			return ele.isDisplayed();
+			do {
+				endTime = now();
+				System.out.println(startTime+"---"+ele+"----"+endTime);
+				return ele.isDisplayed();
+			}while (time == Duration.between(startTime, endTime));
 		}catch(Exception e){
 			return false;
 		}
@@ -328,6 +347,8 @@ public class ManifestPage {
 	public void addGenerator(String generator){
 		//Select Generator
 		clickCustom(searchGeneratorText);
+		takeScreenShot("Generator",driver);
+
 
 		sendKeysCustom(searchGeneratorPopupText,generator);
 		clickCustom(generatorSearchResult);
@@ -356,9 +377,12 @@ public class ManifestPage {
 	}*/
 	public void addCarrier(String carrier){
 		//Select Carrier
-		for(int i=0; i<2; i++) {
+		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		for(int i=0; i<3; i++) {
 			clickCustom(searchCarrierText);
-			if(isVisible(searchCarrierPopupText,2)){
+			if(isVisible(searchCarrierPopupText,Duration.ofSeconds(20))){
+				waitForClickable(searchCarrierPopupText,2);
 				sendKeysCustom(searchCarrierPopupText,carrier );
 				break;
 			}
@@ -371,11 +395,14 @@ public class ManifestPage {
 	}
 
 	public void addReceiver(String receiver){
+		takeScreenShot("addReceiver",driver);
 
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
-			for(int i=0; i<2; i++) {
+		for(int i=0; i<2; i++) {
 				clickCustom(searchReceiverText);
-				if(isVisible(searchReceiverPopupText,2)){
+				if(isVisible(searchReceiverPopupText,Duration.ofSeconds(20))){
+					waitForClickable(searchReceiverPopupText,2);
 					sendKeysCustom(searchReceiverPopupText,receiver );
 					break;
 				}
@@ -393,7 +420,7 @@ public class ManifestPage {
 
 		for(int i=0; i<5; i++) {
 
-			if(isVisible(selectShipMonth,3)) {
+			if(isVisible(selectShipMonth,Duration.ofSeconds(3))) {
 				clickCustom(addWasteButton);
 				break;
 			}
@@ -428,7 +455,7 @@ public class ManifestPage {
 
 		for(int i=0; i<10; i++) {
 
-			if(!isVisible(selectArrivalMonth,5)) {
+			if(!isVisible(selectArrivalMonth,Duration.ofSeconds(5))) {
 				clickCustom(selectWaste111A);
 				clickCustom(selectButton);
 			}
@@ -442,7 +469,7 @@ public class ManifestPage {
 
 
 		System.out.println("---selectButton----");
-		if(isVisible(selectArrivalMonth,5)){
+		if(isVisible(selectArrivalMonth,Duration.ofSeconds(5))){
 			scrollCustom();
 		}
 
@@ -504,6 +531,7 @@ public class ManifestPage {
 			clickCustom(closeConfirmation);
 		}
 		else{
+			clickCustom(reviewCorrections);
 			clickCustom(signConsentCheckBox);
 			clickCustom(signConfirmation);
 			clickCustom(closeConfirmation);
@@ -536,6 +564,9 @@ public class ManifestPage {
 		}
 
 		if(corrections == "True"){
+			clickCustom(handlingCodeLabel);
+			scrollCustom();
+			clickCustom(editShippingInfo);
 			scrollCustom();
 			//clickCustom(dangerousGoodsReceive);
 			sendKeysCustom(packagesReceive, "35");
@@ -549,9 +580,9 @@ public class ManifestPage {
 		//Receiver Sign
 		//I certify that the receiver information contained on the manifest is correct and complete
 		clickCustom(signManifest);
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<5; i++) {
 
-			if(!isVisible(signConsentCheckBox,2)){
+			if(!isVisible(signConsentCheckBox,Duration.ofSeconds(2))){
 				clickCustom(signManifest);
 				System.out.println("---Sign Checkbox not visible--looping for --" + i);
 			}
@@ -579,4 +610,17 @@ public class ManifestPage {
 		}
 	}
 
+
+
+	public static void takeScreenShot(String prefix, WebDriver webDriver) {
+		File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd-HHmmss.SSS");
+			String now = format.format(new Date(System.currentTimeMillis()));
+			//FileHandler.copy(scrFile, new File("../build/reports", prefix + now + ".png"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

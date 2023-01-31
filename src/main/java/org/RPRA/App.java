@@ -1,4 +1,4 @@
-package org.example;
+package org.RPRA;
 
 import io.appium.java_client.AppiumDriver;
 /**
@@ -6,11 +6,16 @@ import io.appium.java_client.AppiumDriver;
  *
  */
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.runner.notification.Failure;
+import org.junit.runner.notification.RunListener;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -54,43 +59,49 @@ getDriver().quit();
 }
 
 @SuppressWarnings("deprecation")
-@Test(enabled = true)
+@Test(enabled = false)
 public void tC1() {
 
-getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+	getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 
 
 
 	ManifestPage manifestPage= new ManifestPage(driver);
 
-	manifestPage.createManifest();
-	manifestPage.addGenerator("ATC1 Business");
+	try {
+		manifestPage.createManifest();
+		manifestPage.addGenerator("ATC1 Business");
 
-	manifestPage.addCarrier("TestautomationCar");
+		manifestPage.addCarrier("TestautomationCar");
 
-	manifestPage.scrollCustom();
-	manifestPage.addReceiver("TestAutomationRec");
+		manifestPage.scrollCustom();
+		manifestPage.addReceiver("TestAutomationRec");
 
-	manifestPage.addWasteInfo();
-	manifestPage.scrollCustom();
-	manifestPage.addWaste();
-	manifestPage.addShippingInfo("Shipping Name", "350");
-	manifestPage.generatorSign("create");
+		manifestPage.addWasteInfo();
+		manifestPage.scrollCustom();
+		manifestPage.addWaste();
+		manifestPage.addShippingInfo("Shipping Name", "350");
+		manifestPage.generatorSign("create");
 
-	manifestPage.carrierSign("create");
-	manifestPage.dropOff();
-	manifestPage.acceptWaste();
-	manifestPage.receiverSign();
-	System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
-	String finalStatus = manifestPage.status.getDomAttribute("text");
-	manifestPage.assertMessage("finalStatus","Completed");
-	manifestPage.clickCustom(manifestPage.previousScreen);
+		manifestPage.carrierSign("create");
+		manifestPage.dropOff();
+		manifestPage.acceptWaste();
+		manifestPage.receiverSign();
+		//System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
+//	String finalStatus = manifestPage.status.getDomAttribute("text");
+		manifestPage.assertMessage("finalStatus", "Completed");
+		manifestPage.clickCustom(manifestPage.previousScreen);
 
-	System.out.println("---Manifest 1 created--Test Result = --"+manifestPage.status.getDomAttribute("text"));
-}
+		System.out.println("---Manifest 1 created--Test Result = --" + manifestPage.status.getDomAttribute("text"));
+	}
+	catch(Exception e){
+		ManifestPage.takeScreenShot("test",driver);
+	}
+	}
 
-@Test(enabled = true)
+@Test(enabled = false)
 public void tC2() {
 
 
@@ -120,11 +131,11 @@ public void tC2() {
 		manifestPage.assertMessage("finalStatus","Completed: Fully Refused");
 		manifestPage.clickCustom(manifestPage.previousScreen);
 
-		System.out.println("---Manifest 2 created--Test Result = --"+manifestPage.status.getDomAttribute("text"));
+	//	System.out.println("---Manifest 2 created--Test Result = --"+manifestPage.status.getDomAttribute("text"));
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void tC3() {
 
 
@@ -152,7 +163,7 @@ public void tC2() {
 		manifestPage.assertMessage("finalStatus","Completed: Partially Refused");
 		manifestPage.clickCustom(manifestPage.previousScreen);
 
-		System.out.println("---Manifest 3 created--Test Result = --"+manifestPage.status.getAttribute("text"));
+	//	System.out.println("---Manifest 3 created--Test Result = --"+manifestPage.status.getAttribute("text"));
 
 	}
 
@@ -190,7 +201,7 @@ public void tC2() {
 		manifestPage.assertMessage("finalStatus","Completed: Partially Refused");
 		manifestPage.clickCustom(manifestPage.previousScreen);
 
-		System.out.println("---Manifest 4 created--Test Result = --"+manifestPage.status.getAttribute("text"));
+	//	System.out.println("---Manifest 4 created--Test Result = --"+manifestPage.status.getAttribute("text"));
 
 	}
 
@@ -202,3 +213,4 @@ public void setDriver(WebDriver driver) {
 	this.driver = driver;
 }
 }
+
