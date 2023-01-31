@@ -7,14 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import ca.rpra.utils.BasePage;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 
-public class LoginPage extends BasePage {
+public class IOS_LoginPage extends BasePage {
 	private WebDriver driver;
 	@FindBy(xpath="//XCUIElementTypeOther[@name='main']/XCUIElementTypeOther[4]/XCUIElementTypeTextField")
 	private WebElement user_name;
@@ -36,7 +33,7 @@ public class LoginPage extends BasePage {
 	@FindBy(xpath ="//XCUIElementTypeOther[@name='Logout']")
 	private WebElement logoutButton;
 	
-	public LoginPage(WebDriver driver) {
+	public IOS_LoginPage(WebDriver driver) {
 
 		PageFactory.initElements(driver, this);
 		this.driver=driver;
