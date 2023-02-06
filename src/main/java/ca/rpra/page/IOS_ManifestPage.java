@@ -133,15 +133,18 @@ public class IOS_ManifestPage extends BasePage {
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Sign Manifest'])[2]")
 	private WebElement signManifest;
+
+	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Get Generator’s Signature\"])[2]")
+	private WebElement generatorSignManifest;
 	
 	
-	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'`]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Consent Toggle Disabled\"])[2]")
 	private WebElement signConsentCheckBox;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Confirm'])[2]")
 	private WebElement signConfirmation;
 	
-	@FindBy(xpath="(//XCUIElementTypeOther[@name='Close'])[2]")
+	@FindBy(xpath="(//XCUIElementTypeOther[@name=\"Close\"])[3]")
 	private WebElement closeConfirmation;
 	
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Confirm Drop-Off'])[2]")
@@ -316,8 +319,8 @@ public class IOS_ManifestPage extends BasePage {
 
 	public void dropOff(){
 
-		clickCustom(completeDropOff);
 		clickCustom(confirmDropOff);
+		clickCustom(signConfirmation);
 		clickCustom(closeConfirmation);
 	}
 
@@ -337,20 +340,23 @@ public class IOS_ManifestPage extends BasePage {
 	}
 
 	public void receiverSignature(){
+		clickCustom(signManifest);
 		signManifest();
 	}
 
 	public void generatorSignOnCorrection(){
+		clickCustom(generatorSignManifest);
 		clickCustom(reivewCorrectionButton);
 		signManifest();
 	}
 	public void carrierSignOnCorrection(){
 		clickCustom(reivewCorrectionButton);
+		clickCustom(signManifest);
 		signManifest();
 	}
 
 	private void signManifest(){
-		clickCustom(signManifest);
+
 		clickCustom(signConsentCheckBox);
 		clickCustom(signConfirmation);
 		clickCustom(closeConfirmation);

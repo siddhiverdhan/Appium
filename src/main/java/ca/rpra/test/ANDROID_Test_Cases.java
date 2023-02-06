@@ -3,6 +3,7 @@ package ca.rpra.test;
 import ca.rpra.page.ANDROID_LoginPage;
 import ca.rpra.page.ANDROID_ManifestPage;
 import ca.rpra.utils.ReadProperties;
+import ca.rpra.utils.ReadAndroidProperties;
 import io.appium.java_client.AppiumDriver;
 /**
  * Hello world!
@@ -26,7 +27,7 @@ private WebDriver driver;
 @BeforeClass
 public void setUp() throws MalformedURLException {
 	//Setting Desired Capabilities
-	ReadProperties rp = new ReadProperties();
+	ReadAndroidProperties rp = new ReadAndroidProperties();
 	DesiredCapabilities capabilities = new DesiredCapabilities();
 
 	capabilities.setCapability("app_name",rp.getValue("app_name"));
