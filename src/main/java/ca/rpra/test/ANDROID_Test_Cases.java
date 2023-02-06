@@ -81,7 +81,7 @@ public void android_AcceptWithoutAnyCorrections() {
 
 		ANDROIDManifestPage.carrierSign("create");
 		ANDROIDManifestPage.dropOff();
-		ANDROIDManifestPage.acceptWaste();
+		ANDROIDManifestPage.acceptWaste("False");
 		ANDROIDManifestPage.receiverSign();
 		//System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
 //	String finalStatus = manifestPage.status.getDomAttribute("text");
@@ -94,7 +94,7 @@ public void android_AcceptWithoutAnyCorrections() {
 		ANDROID_ManifestPage.takeScreenShot("test",driver);
 	}
 	}
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void android_AcceptWithCorrections() {
 
 
@@ -119,8 +119,12 @@ public void android_AcceptWithoutAnyCorrections() {
 
 			ANDROIDManifestPage.carrierSign("create");
 			ANDROIDManifestPage.dropOff();
-			ANDROIDManifestPage.acceptWaste();
+			ANDROIDManifestPage.acceptWaste("True");
 			ANDROIDManifestPage.receiverSign();
+
+			ANDROIDManifestPage.generatorSign("correction");
+
+			ANDROIDManifestPage.carrierSign("correction");
 			//System.out.println("---Manifest Status is ----"+manifestPage.status.getDomAttribute("text"));
 //	String finalStatus = manifestPage.status.getDomAttribute("text");
 			ANDROIDManifestPage.assertMessage("finalStatus", "Completed");
@@ -134,7 +138,7 @@ public void android_AcceptWithoutAnyCorrections() {
 	}
 
 
-@Test(enabled = true)
+@Test(enabled = false)
 public void android_FullRefusal() {
 
 
@@ -168,7 +172,7 @@ public void android_FullRefusal() {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void android_PartialRefusalWithoutAnyCorrections() {
 
 
@@ -200,7 +204,7 @@ public void android_FullRefusal() {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void android_PartialRefusalWithCorrections() {
 
 

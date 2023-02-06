@@ -146,8 +146,14 @@ public class ANDROID_ManifestPage {
 
 	@FindBy(xpath="(//XCUIElementTypeOther[@name='Sign Manifest'])[2] | //android.view.ViewGroup[@content-desc=\"Sign Manifest\"]/android.view.ViewGroup/android.widget.TextView")
 	private WebElement signManifest;
-	
-	
+
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Get Generator’s Signature\"]/android.widget.TextView | //android.view.ViewGroup[@content-desc=\"Sign Manifest\"]/android.view.ViewGroup/android.widget.TextView")
+	private WebElement signGenerator;
+
+	@FindBy(xpath="//android.view.ViewGroup[@content-desc=\"Get Carrier's Signature\"]/android.view.ViewGroup/android.widget.TextView | //android.view.ViewGroup[@content-desc=\"Sign Manifest\"]/android.view.ViewGroup/android.widget.TextView")
+	private WebElement signCarrier;
+
 	@FindBy(xpath="//XCUIElementTypeOther[@value='checkbox, not checked, off'] | //android.widget.CheckBox[@content-desc=\"Consent Toggle Disabled\"]")
 	private WebElement signConsentCheckBox;
 	
@@ -487,13 +493,13 @@ public class ANDROID_ManifestPage {
 		//I certify that the information contained in the corrections tab of this manifest is correct and complete. I hereby declare that the contents of this consignment are fully and accurately described above by the proper shipping name, and are classified, packaged, marked and labelled/placarded, and are in all respects in proper condition for transport according to applicable international and national governmental regulations.
 		if(stage == "create") {
 			clickCustom(manifestCard);
-			clickCustom(signManifest);
+			clickCustom(signGenerator);
 			clickCustom(signConsentCheckBox);
 			clickCustom(signConfirmation);
 			clickCustom(closeConfirmation);
 		}
 		else{
-			clickCustom(reviewCorrections);
+			clickCustom(signGenerator);
 			clickCustom(signConsentCheckBox);
 			clickCustom(signConfirmation);
 			clickCustom(closeConfirmation);
@@ -510,25 +516,30 @@ public class ANDROID_ManifestPage {
 			sendKeysCustom(vehicleRegNumber, "Testing");
 			clickCustom(vehicleProvince);
 			clickCustom(vehicleProvincePopupAB);
-			clickCustom(signManifest);
+			clickCustom(signCarrier);
 			clickCustom(signConsentCheckBox);
 			clickCustom(signConfirmation);
 			clickCustom(closeConfirmation);
 		}
 		else{
-			clickCustom(reviewCorrections);
+			clickCustom(signCarrier);
 			clickCustom(signConsentCheckBox);
 			clickCustom(signConfirmation);
 			clickCustom(closeConfirmation);
 		}
 	}
 
-	public void acceptWaste(){
+	public void acceptWaste(String corrections){
 		clickCustom(wasteTab);
 		clickCustom(acceptWasteButton);
 		clickCustom(copyQuantityShipped);
 		clickCustom(handlingCode);
 		clickCustom(handlingCodePopUpStorage);
+		if(corrections=="True"){
+			clickCustom(editShippingInfo);
+			scrollCustom();
+			clickCustom(dangerousGoodsReceive);
+		}
 		clickCustom(acceptWasteConfirm);
 	}
 

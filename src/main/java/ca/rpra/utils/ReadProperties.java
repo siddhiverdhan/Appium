@@ -16,7 +16,7 @@ public class ReadProperties {
 			InputStream resourceStream = new FileInputStream(resourceName);
 			InputStream resourceStreamAndroid = new FileInputStream(resourceNameAndroid);
 			props.load(resourceStream);
-			//props.load(resourceStreamAndroid);
+			props.load(resourceStreamAndroid);
 			
 		}
 		catch(Exception e) {
