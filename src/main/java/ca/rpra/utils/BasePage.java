@@ -104,7 +104,7 @@ public class BasePage {
 	}
 
 	public void clickMultiple(WebElement tobeSelectedElement,WebElement visibleAfterSelectingFirst ){
-		for(int i=0;i<5;i++){
+		for(int i=0;i<3;i++){
 			clickCustom(tobeSelectedElement);
 			if(isVisible(visibleAfterSelectingFirst)) {
 				System.out.println("Selected Element"+ tobeSelectedElement.toString()+ "after "+ i +" retries");

@@ -12,7 +12,7 @@ public class ReadAndroidProperties {
 
 		props = new Properties();
 		try {
-			I
+
 			InputStream resourceStreamAndroid = new FileInputStream(resourceNameAndroid);
 			props.load(resourceStreamAndroid);
 			

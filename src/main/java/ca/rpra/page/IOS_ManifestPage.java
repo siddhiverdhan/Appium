@@ -302,6 +302,7 @@ public class IOS_ManifestPage extends BasePage {
 
 		clickCustom(readyForShipment);
 		clickCustom(manifestCard);
+		clickCustom(generatorSignManifest);
 		signManifest();
 
 	}
@@ -314,6 +315,7 @@ public class IOS_ManifestPage extends BasePage {
 	}
 
 	public void signCarrier(){
+		clickCustom(signManifest);
 		signManifest();
 	}
 
